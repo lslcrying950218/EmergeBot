@@ -1,0 +1,41 @@
+{
+  "name": "temp_init",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently --kill-others --kill-timeout 5000 -n \"next,bridge,hermes-bridge\" -c \"blue,green,magenta\" \"next dev\" \"npm run bridge\" \"npm run hermes-bridge\"",
+    "dev:quick": "concurrently --kill-others --kill-timeout 3000 -n \"next,bridge\" -c \"blue,green\" \"next dev\" \"npm run bridge\"",
+    "bridge": "PYTHONPATH=../dimos /home/emergeos/Share_pgx/ZLP/dimos/.venv/bin/python3 bridge_dimos_ui.py",
+    "hermes-bridge": "PYTHONPATH=../dimos /home/emergeos/Share_pgx/ZLP/dimos/.venv/bin/python3 hermes_bridge.py",
+    "killall": "pkill -f 'next dev' || true; pkill -f 'bridge_dimos_ui' || true; pkill -f 'hermes_bridge' || true; echo 'All dev processes killed'",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.0",
+    "@types/three": "^0.184.0",
+    "lucide-react": "^1.11.0",
+    "next": "16.2.4",
+    "pako": "^2.1.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "react-resizable-panels": "^4.10.0",
+    "socket.io-client": "^4.8.3",
+    "three": "^0.184.0",
+    "zustand": "^5.0.12"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/pako": "^2.0.4",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "concurrently": "^9.2.1",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.4",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

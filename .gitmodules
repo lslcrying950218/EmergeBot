@@ -1,0 +1,3 @@
+[submodule "dimos"]
+	path = dimos
+	url = http://10.100.24.15/kernelsoft/JJL/dimos.git

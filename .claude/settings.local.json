@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C \"C:\\\\Users\\\\Millozhang\\\\Documents\\\\EmergeBot\" rm --cached -r \"tmpclaude-6f09-cwd\" \"tmpclaude-a73a-cwd\")",
+      "Bash(git rm:*)"
+    ]
+  }
+}

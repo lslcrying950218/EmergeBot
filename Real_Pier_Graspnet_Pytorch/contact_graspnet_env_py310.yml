@@ -1,0 +1,51 @@
+name: contact_graspnet
+channels:
+  - pytorch
+  - nvidia/label/cuda-12.8.0
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  # PyTorch with CUDA 12.8
+  - pytorch=2.11.0
+  - torchvision
+  - torchaudio
+  - pytorch-cuda=12.8
+  # Core scientific packages
+  - numpy
+  - scipy
+  - pandas
+  - h5py
+  - pyyaml
+  - tqdm
+  - networkx
+  # Visualization and rendering
+  - pyrender
+  - pyopengl
+  - pyglet
+  - trimesh
+  - imageio
+  - pillow
+  # Development tools
+  - jupyter
+  - ipykernel
+  - ipython
+  # Pip dependencies
+  - pip:
+      # Core ML dependencies
+      - tensorboardx
+      - scikit-learn
+      - opencv-python
+      # 3D visualization
+      - open3d
+      # Gripper utilities
+      - pyquaternion
+      - python-fcl
+      # Additional utilities
+      - matplotlib
+      - rtree
+      - absl-py
+      - addict
+      - click
+      - configargparse

@@ -1,0 +1,58 @@
+#!/bin/bash
+# 重新启动 EmergeUI 前端（不重启 DimOS）
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+echo "======================================"
+echo "  重启 EmergeUI Dashboard"
+echo "======================================"
+echo ""
+
+# 函数：检查进程是否运行
+check_running() {
+    pgrep -f "$1" > /dev/null 2>&1
+}
+
+# 停止所有相关进程
+echo "[1/2] 停止现有进程..."
+# 杀 EmergeUI 相关的 Python 进程
+pkill -9 -f "bridge_dimos_ui" 2>/dev/null
+pkill -9 -f "hermes_bridge" 2>/dev/null
+# 杀 npm dev 相关进程
+pkill -9 -f "npm run dev" 2>/dev/null
+# 杀 next 进程（包括 next-server）
+pkill -9 -f "next" 2>/dev/null
+sleep 2
+echo "  ✓ 已清理"
+
+# 启动 EmergeUI
+echo ""
+echo "[2/2] 启动 EmergeUI..."
+cd "$SCRIPT_DIR"
+
+nohup npm run dev > /tmp/emergeui.log 2>&1 &
+NPM_PID=$!
+
+echo "  启动中... (PID: $NPM_PID)"
+sleep 5
+
+# 检查启动结果
+if check_running "next dev"; then
+    echo "  ✓ Next.js 启动成功"
+else
+    echo "  ✗ 启动失败，查看日志："
+    tail -30 /tmp/emergeui.log
+    exit 1
+fi
+
+echo ""
+echo "======================================"
+echo "  系统状态"
+echo "======================================"
+echo "  Next.js:    $(check_running 'next dev' && echo '● 运行中' || echo '○ 未运行')"
+echo "  Bridge:    $(check_running 'bridge_dimos_ui' && echo '● 运行中' || echo '○ 未运行')"
+echo "  Emerge:    $(check_running 'hermes_bridge' && echo '● 运行中' || echo '○ 未运行')"
+echo "  EmergeOS:  $(check_running 'dimos run' && echo '● 运行中' || echo '○ 未运行')"
+echo ""
+echo "  前端界面:   http://localhost:3000"
+echo "======================================"
